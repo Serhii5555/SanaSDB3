@@ -1,0 +1,145 @@
+﻿@model TasksViewModel
+
+@{
+    ViewData["Title"] = "TODO List";
+}
+
+<style>
+    .completed-table {
+        background-color: #f2f2f2; 
+    }
+
+    .completed-task td:not(:last-child, :first-child) {
+        text-decoration: line-through;
+        color: #adadad;
+    }
+
+    .flex {
+        display: flex;
+        align-items: end;
+    }
+
+</style>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+
+<h1>TODO List</h1>
+
+        <form asp-action="Create" method="post" class="form">
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group col-4">
+                <label asp-for="NewTask.Name" class="control-label"></label>
+                <input asp-for="NewTask.Name" class="form-control" />
+                <span asp-validation-for="NewTask.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-2">
+                <label asp-for="NewTask.DueDate" class="control-label"></label>
+                <input asp-for="NewTask.DueDate" class="form-control" />
+                <span asp-validation-for="NewTask.DueDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-2">
+                <label asp-for="NewTask.CategoryId" class="control-label"></label>
+                <select asp-for="NewTask.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+
+            <div class="form-group col-1 flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+        </form>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Completed
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                DueDate
+            </th>
+            <th>
+                Category
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TaskList.Where(t => !t.Completed))
+        {
+            <tr>
+                <td>
+                    <form id="form-@item.Id" asp-action="TaskComplete" asp-route-id="@item.Id" method="post">
+                        <input class="form-check-input" type="checkbox" id="checkbox-@item.Id" name="completed" onchange="submitForm(@item.Id)"
+                        @if (item.Completed)
+                        {
+                            <text>checked</text>
+                        }>
+                        <label for="checkbox-@item.Id"></label>
+                    </form>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit" style="font-size:25px;"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" type="submit"><i class="fa fa-close" style="font-size:25px; color:red;"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tbody class="completed-table">
+        @foreach (var item in Model.TaskList.Where(t => t.Completed))
+        {
+            <tr class="completed-task">
+                <td>
+                    <form id="form-@item.Id" asp-action="TaskComplete" asp-route-id="@item.Id" method="post">
+                        <input class="form-check-input" type="checkbox" id="checkbox-@item.Id" name="completed" onchange="submitForm(@item.Id)"
+                        @if (item.Completed)
+                        {
+                            <text>checked</text>
+                        }>
+                        <label for="checkbox-@item.Id"></label>
+                    </form>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" style="font-size:25px;"><i class="fa fa-edit"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id"  type="submit"><i class="fa fa-close" style="font-size:25px; color:red;"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<script>
+    function submitForm(taskId) {
+        document.getElementById("form-" + taskId).submit();
+    }
+</script>
