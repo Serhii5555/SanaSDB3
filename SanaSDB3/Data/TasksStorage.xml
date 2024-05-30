@@ -1,10 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Tasks>
   <Task>
-    <Id>2</Id>
-    <Name>TAsk</Name>
+    <Id>1</Id>
+    <Name>asd</Name>
     <Completed>false</Completed>
-    <DueDate>2024-05-29T12:30:00</DueDate>
-    <CategoryId>4</CategoryId>
+    <DueDate></DueDate>
+    <CategoryId></CategoryId>
+  </Task>
+  <Task>
+    <Id>2</Id>
+    <Name>asdasd</Name>
+    <Completed>false</Completed>
+    <DueDate>2024-05-23T17:43:00.0000000</DueDate>
+    <CategoryId>1</CategoryId>
+  </Task>
+  <Task>
+    <Id>3</Id>
+    <Name>asdasd</Name>
+    <Completed>true</Completed>
+    <DueDate></DueDate>
+    <CategoryId></CategoryId>
   </Task>
 </Tasks>

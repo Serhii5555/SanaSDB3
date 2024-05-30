@@ -44,7 +44,7 @@ namespace SanaSDB3.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind(Prefix = "NewTask")] Tasks model)
+        public async Task<IActionResult> TaskCreate([Bind(Prefix = "NewTask")] Tasks model)
         {
             if (ModelState.IsValid)
             {
@@ -57,6 +57,23 @@ namespace SanaSDB3.Controllers
                 };
 
                 await _repositoryResolver.GetTasksRepository().Create(task);
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CategoryCreate([Bind(Prefix = "NewCategory")] Categories model)
+        {
+            if (ModelState.IsValid)
+            {
+                var category = new Categories
+                {
+                    Name = model.Name,
+                };
+
+                await _repositoryResolver.GetCategoriesRepository().Create(category);
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));

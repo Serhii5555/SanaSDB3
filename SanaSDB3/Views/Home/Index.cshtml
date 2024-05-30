@@ -10,13 +10,13 @@
 <h1 class="d-flex mt-5 align-items-center justify-content-center">@ViewData["Title"]</h1>
 
 <form asp-action="ChangeStorageType" method="post" class="form-inline d-flex mb-5 align-items-center justify-content-center">
-    <div class="form-group">
+    <div class="form-group text-center">
         <label for="storageType" class="mr-2">Select Storage Type:</label>
         <div id="storageType">
             @foreach (var storageType in Enum.GetValues(typeof(StorageType)))
             {
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="storageType" value="@storageType" onchange="this.form.submit()" 
+                    <input class="form-check-input" type="radio" name="storageType" value="@storageType" onchange="this.form.submit()"
                     @if (storageType.ToString() == Model.StorageTypeSelected.ToString())
                     {
                         <text>checked</text>
@@ -29,25 +29,38 @@
     </div>
 </form>
 
-
-<form asp-action="Create" method="post" class="form">
+<form asp-action="CategoryCreate" method="post" class="form mt-4">
     <div class="row">
+        <h5>Create Category</h5>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="form-group col-4">
-            <label asp-for="NewTask.Name" class="control-label"></label>
-            <input asp-for="NewTask.Name" class="form-control" />
+            <input asp-for="NewCategory.Name" class="form-control" placeholder="Name"/>
+            <span asp-validation-for="NewCategory.Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-outline-primary">Create</button>
+        </div>
+    </div>
+</form>
+
+<form asp-action="TaskCreate" method="post" class="form mt-4">
+    <div class="row">
+        <h5>Create Task</h5>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group col-4">
+            <input asp-for="NewTask.Name" class="form-control" placeholder="Name"/>
             <span asp-validation-for="NewTask.Name" class="text-danger"></span>
         </div>
 
         <div class="form-group col-2">
-            <label asp-for="NewTask.DueDate" class="control-label"></label>
             <input asp-for="NewTask.DueDate" class="form-control" />
             <span asp-validation-for="NewTask.DueDate" class="text-danger"></span>
         </div>
 
         <div class="form-group col-2">
-            <label asp-for="NewTask.CategoryId" class="control-label">Category</label>
             <select asp-for="NewTask.CategoryId" class="form-control">
                 <option value=" ">No Category</option>
                 @foreach (var category in Model.CategoriesList)
@@ -58,58 +71,37 @@
         </div>
 
         <div class="form-group col-2 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-outline-primary">Create</button>
         </div>
     </div>
 </form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Completed
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                DueDate
-            </th>
-            <th>
-                Category
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+<table class="table table-hover task-table mt-4 border-top">
     <tbody>
         @foreach (var item in Model.TaskList.Where(t => !t.Completed))
         {
             <tr>
-                <td>
+                <td width="30px">
                     <form asp-action="TaskComplete" asp-route-id="@item.Id" method="post">
-                        <input class="form-check-input" type="checkbox" onchange="this.form.submit()"
-                        @if (item.Completed)
+                        <input style="height:20px; width: 20px;" class="form-check-input" type="checkbox" onchange="this.form.submit()" @if (item.Completed)
                         {
                             <text>checked</text>
                         }>
                     </form>
-
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                <td class="text-start" width="600px">
+                    @item.Name
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DueDate)
-                </td>
-                <td>
+                <td width="250px">@item.DueDate?.ToString("d MMMM HH:mm")</td>
+                <td width="200px">
                     @if (item.CategoryId != null)
                     {
-                        var category = @Model.CategoriesList?.FirstOrDefault(category => category.Id == item.CategoryId, null);
-                        <span>@category?.Name</span>
+                        var category = @Model.CategoriesList?.FirstOrDefault(category => category.Id == item.CategoryId);
+                        <p class="primary-bg">@category?.Name</p>
                     }
                 </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id" type="submit"><i class="fa fa-close" style="font-size:25px; color:red;"></i></a>
+                <td class="text-end">
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="me-4"><i class="fa fa-close" style="font-size:25px; color:red;"></i></a>
                 </td>
             </tr>
         }
@@ -118,31 +110,27 @@
         @foreach (var item in Model.TaskList.Where(t => t.Completed))
         {
             <tr class="completed-task">
-                <td>
+                <td width="30px">
                     <form asp-action="TaskComplete" asp-route-id="@item.Id" method="post">
-                        <input class="form-check-input" type="checkbox" onchange="this.form.submit()"
-                        @if (item.Completed)
+                        <input style="height:20px; width: 20px;" class="form-check-input" type="checkbox" onchange="this.form.submit()" @if (item.Completed)
                         {
                             <text>checked</text>
                         }>
                     </form>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                <td class="text-start" width="600px">
+                    @item.Name
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DueDate)
-                </td>
-                <td>
+                <td width="250px">@item.DueDate?.ToString("d MMMM HH:mm")</td>
+                <td width="200px">
                     @if (item.CategoryId != null)
                     {
-                        var category = @Model.CategoriesList?.FirstOrDefault(category => category.Id == item.CategoryId, null);
-                        <span>@category?.Name</span>
+                        var category = @Model.CategoriesList?.FirstOrDefault(category => category.Id == item.CategoryId);
+                        <p class="secondary-bg">@category?.Name</p>
                     }
-
                 </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id" type="submit"><i class="fa fa-close" style="font-size:25px; color:red;"></i></a>
+                <td class="text-end">
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="me-4"><i class="fa fa-close" style="font-size:25px; color:gray;"></i></a>
                 </td>
             </tr>
         }

@@ -4,23 +4,16 @@ using SanaSDB3.Repositories;
 
 namespace SanaSDB3.Factories
 {
-    public class XMLFactory : IRepositoryFactory
-    {
-        private readonly IServiceProvider _serviceProvider;
-
-        public XMLFactory(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
-
+    public class XMLFactory(IServiceProvider serviceProvider) : IRepositoryFactory
+    { 
         public ICategoriesRepository GetCategoriesRepository()
         {
-            return _serviceProvider.GetRequiredService<XMLCategoriesRepository>();
+            return serviceProvider.GetRequiredService<XMLCategoriesRepository>();
         }
 
         public ITasksRepository GetTasksRepository()
         {
-            return _serviceProvider.GetRequiredService<XMLTasksRepository>();
+            return serviceProvider.GetRequiredService<XMLTasksRepository>();
         }
     }
 }

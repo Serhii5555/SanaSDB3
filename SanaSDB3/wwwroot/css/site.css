@@ -25,7 +25,61 @@ body {
     background-color: #f2f2f2;
 }
 
-.completed-task td:not(:last-child, :first-child) {
+.completed-task td:not(:last-child) {
     text-decoration: line-through;
     color: #adadad;
+}
+
+.task-table th, .task-table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.task-table tbody tr {
+    transition: background-color 0.3s;
+}
+
+.task-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.task-table tbody tr.completed-task {
+    background-color: #e9ecef;
+    text-decoration: line-through;
+}
+
+.task-table .form-check-input {
+    cursor: pointer;
+}
+
+.task-table .fa-close {
+    cursor: pointer;
+}
+
+.task-table .completed-table {
+    margin-top: 20px;
+}
+
+.task-table td {
+    padding: 8px;
+}
+
+.primary-bg {
+    background-color: #0d6efd;
+    border-radius: 6px;
+    color: white;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 6px;
+    margin: 0;
+}
+
+.secondary-bg {
+    background-color: #f2f2f2;
+    border-radius: 6px;
+    color: gray;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 6px;
+    margin: 0;
 }

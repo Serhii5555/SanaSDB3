@@ -26,7 +26,7 @@ namespace SanaSDB3.Repositories.XMLRepositories
                 new XElement("Id", newId),
                 new XElement("Name", task.Name),
                 new XElement("Completed", task.Completed),
-                new XElement("DueDate", task.DueDate),
+                new XElement("DueDate", task.DueDate.HasValue ? task.DueDate.Value.ToString("o") : string.Empty),
                 new XElement("CategoryId", task.CategoryId.HasValue ? task.CategoryId.ToString() : string.Empty)
             );
 
@@ -45,7 +45,7 @@ namespace SanaSDB3.Repositories.XMLRepositories
                 Id = (int)element.Element("Id"),
                 Name = (string)element.Element("Name"),
                 Completed = (bool)element.Element("Completed"),
-                DueDate = (DateTime)element.Element("DueDate"),
+                DueDate = !string.IsNullOrEmpty((string)element.Element("DueDate")) ? (DateTime?)DateTime.Parse((string)element.Element("DueDate")) : null,
                 CategoryId = !string.IsNullOrEmpty((string)element.Element("CategoryId")) ? (int?)int.Parse((string)element.Element("CategoryId")) : null
             };
         }
@@ -58,7 +58,7 @@ namespace SanaSDB3.Repositories.XMLRepositories
             {
                 element.SetElementValue("Name", task.Name);
                 element.SetElementValue("Completed", task.Completed);
-                element.SetElementValue("DueDate", task.DueDate);
+                element.SetElementValue("DueDate", task.DueDate.HasValue ? task.DueDate.Value.ToString("o") : string.Empty);
                 element.SetElementValue("CategoryId", task.CategoryId.HasValue ? task.CategoryId.ToString() : string.Empty);
                 await SaveDocumentAsync(xdoc);
             }
@@ -83,7 +83,7 @@ namespace SanaSDB3.Repositories.XMLRepositories
                 Id = (int)x.Element("Id"),
                 Name = (string)x.Element("Name"),
                 Completed = (bool)x.Element("Completed"),
-                DueDate = (DateTime)x.Element("DueDate"),
+                DueDate = !string.IsNullOrEmpty((string)x.Element("DueDate")) ? (DateTime?)DateTime.Parse((string)x.Element("DueDate")) : null,
                 CategoryId = !string.IsNullOrEmpty((string)x.Element("CategoryId")) ? (int?)int.Parse((string)x.Element("CategoryId")) : null
             });
         }

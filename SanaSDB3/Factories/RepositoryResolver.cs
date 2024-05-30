@@ -23,8 +23,7 @@ namespace SanaSDB3.Factories
         public RepositoryResolver(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _storageType = StorageType.SQL;
-            _factory = serviceProvider.GetRequiredService<SQLFactory>();
+            _factory = _serviceProvider.GetRequiredService<SQLFactory>();
         }
 
         public ICategoriesRepository GetCategoriesRepository()
@@ -40,12 +39,12 @@ namespace SanaSDB3.Factories
         public RepositoryResolver SetStorageType(StorageType storageType)
         {
             _storageType = storageType;
-            switch (storageType)
+            _factory = storageType switch
             {
-                case StorageType.SQL: _factory = _serviceProvider.GetRequiredService<SQLFactory>(); break;
-                case StorageType.XML: _factory = _serviceProvider.GetRequiredService<XMLFactory>(); break;
-                default: throw new InvalidEnumArgumentException(nameof(storageType));
-            }
+                StorageType.SQL => _serviceProvider.GetRequiredService<SQLFactory>(),
+                StorageType.XML => _serviceProvider.GetRequiredService<XMLFactory>(),
+                _ => throw new InvalidEnumArgumentException(nameof(storageType)),
+            };
 
             return this;
         }
