@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.Extensions.Configuration;
 using SanaSDB3.Models;
 
 namespace SanaSDB3.Repositories.XMLRepositories
@@ -19,14 +20,14 @@ namespace SanaSDB3.Repositories.XMLRepositories
         public async Task Create(Tasks task)
         {
             var xdoc = await LoadDocumentAsync();
-            var newId = xdoc.Root.Elements("Task").Max(x => (int)x.Element("Id")) + 1;
+            var newId = xdoc.Root.Elements("Task").Any() ? xdoc.Root.Elements("Task").Max(x => (int)x.Element("Id")) + 1 : 1;
 
             var newTask = new XElement("Task",
                 new XElement("Id", newId),
                 new XElement("Name", task.Name),
                 new XElement("Completed", task.Completed),
                 new XElement("DueDate", task.DueDate),
-                new XElement("CategoryId", task.CategoryId)
+                new XElement("CategoryId", task.CategoryId.HasValue ? task.CategoryId.ToString() : string.Empty)
             );
 
             xdoc.Root.Add(newTask);
@@ -45,7 +46,7 @@ namespace SanaSDB3.Repositories.XMLRepositories
                 Name = (string)element.Element("Name"),
                 Completed = (bool)element.Element("Completed"),
                 DueDate = (DateTime)element.Element("DueDate"),
-                CategoryId = (int)element.Element("CategoryId")
+                CategoryId = !string.IsNullOrEmpty((string)element.Element("CategoryId")) ? (int?)int.Parse((string)element.Element("CategoryId")) : null
             };
         }
 
@@ -58,7 +59,7 @@ namespace SanaSDB3.Repositories.XMLRepositories
                 element.SetElementValue("Name", task.Name);
                 element.SetElementValue("Completed", task.Completed);
                 element.SetElementValue("DueDate", task.DueDate);
-                element.SetElementValue("CategoryId", task.CategoryId);
+                element.SetElementValue("CategoryId", task.CategoryId.HasValue ? task.CategoryId.ToString() : string.Empty);
                 await SaveDocumentAsync(xdoc);
             }
         }
@@ -83,12 +84,18 @@ namespace SanaSDB3.Repositories.XMLRepositories
                 Name = (string)x.Element("Name"),
                 Completed = (bool)x.Element("Completed"),
                 DueDate = (DateTime)x.Element("DueDate"),
-                CategoryId = (int)x.Element("CategoryId")
+                CategoryId = !string.IsNullOrEmpty((string)x.Element("CategoryId")) ? (int?)int.Parse((string)x.Element("CategoryId")) : null
             });
         }
 
         private async Task<XDocument> LoadDocumentAsync()
         {
+            if (!File.Exists(_filePath))
+            {
+                var xdoc = new XDocument(new XElement("Tasks"));
+                await SaveDocumentAsync(xdoc);
+            }
+
             using var stream = new FileStream(_filePath, FileMode.OpenOrCreate, FileAccess.Read);
             return await Task.Run(() => XDocument.Load(stream));
         }
@@ -100,4 +107,3 @@ namespace SanaSDB3.Repositories.XMLRepositories
         }
     }
 }
-

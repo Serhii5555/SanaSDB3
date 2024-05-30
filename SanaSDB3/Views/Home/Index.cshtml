@@ -3,12 +3,13 @@
 
 @model TaskViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "ToDo List";
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 }
 
-<h1>Task List</h1>
+<h1 class="d-flex mt-5 align-items-center justify-content-center">@ViewData["Title"]</h1>
 
-<form asp-action="ChangeStorageType" method="post" class="form-inline mb-4">
+<form asp-action="ChangeStorageType" method="post" class="form-inline d-flex mb-5 align-items-center justify-content-center">
     <div class="form-group">
         <label for="storageType" class="mr-2">Select Storage Type:</label>
         <div id="storageType">
@@ -46,9 +47,9 @@
         </div>
 
         <div class="form-group col-2">
-            <label asp-for="NewTask.CategoryId" class="control-label"></label>
+            <label asp-for="NewTask.CategoryId" class="control-label">Category</label>
             <select asp-for="NewTask.CategoryId" class="form-control">
-                <option value=""></option>
+                <option value=" ">No Category</option>
                 @foreach (var category in Model.CategoriesList)
                 {
                     <option value="@category.Id">@category.Name</option>
@@ -91,7 +92,6 @@
                         {
                             <text>checked</text>
                         }>
-                        <label for="checkbox-@item.Id"></label>
                     </form>
 
                 </td>
@@ -109,7 +109,6 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit" style="font-size:25px;"></i></a>
                     <a asp-action="Delete" asp-route-id="@item.Id" type="submit"><i class="fa fa-close" style="font-size:25px; color:red;"></i></a>
                 </td>
             </tr>
@@ -126,7 +125,6 @@
                         {
                             <text>checked</text>
                         }>
-                        <label for="checkbox-@item.Id"></label>
                     </form>
                 </td>
                 <td>
@@ -144,7 +142,6 @@
 
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" style="font-size:25px;"><i class="fa fa-edit"></i></a>
                     <a asp-action="Delete" asp-route-id="@item.Id" type="submit"><i class="fa fa-close" style="font-size:25px; color:red;"></i></a>
                 </td>
             </tr>

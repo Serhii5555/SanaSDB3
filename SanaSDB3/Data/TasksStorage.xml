@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Tasks>
   <Task>
-    <Id>1</Id>
-    <Name>Sample Task</Name>
-    <Completed>false</Completed>
-    <DueDate>2024-01-01T00:00:00</DueDate>
-    <CategoryId>1</CategoryId>
-  </Task>
-  <Task>
     <Id>2</Id>
     <Name>TAsk</Name>
     <Completed>false</Completed>
