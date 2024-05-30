@@ -20,3 +20,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.completed-table {
+    background-color: #f2f2f2;
+}
+
+.completed-task td:not(:last-child, :first-child) {
+    text-decoration: line-through;
+    color: #adadad;
+}

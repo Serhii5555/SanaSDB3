@@ -1,28 +1,31 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using SanaSDB3;
+using SanaSDB3.Repositories.SQLRepositories;
+using SanaSDB3.Repositories;
+using SanaSDB3.Factories;
+using SanaSDB3.Repositories.XMLRepositories;
+using SanaSDB3.Factory;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services
+    .AddSingleton<SQLTasksRepository>()
+    .AddSingleton<XMLTasksRepository>();
 
-builder.Services.AddDbContext<TODOlistContext>(options =>
-{
-    options.UseSqlServer(connectionString);
-});
+builder.Services
+    .AddSingleton<SQLCategoriesRepository>()
+    .AddSingleton<XMLCategoriesRepository>();
+
+builder.Services.AddSingleton<SQLFactory>();
+builder.Services.AddSingleton<XMLFactory>();
+builder.Services.AddSingleton<RepositoryResolver>();
+
 
 var app = builder.Build();
 
-
-
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -35,6 +38,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Tasks}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

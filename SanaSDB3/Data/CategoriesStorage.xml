@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Categories>
+	<Category>
+		<Id>1</Id>
+		<Name>Work</Name>
+	</Category>
+	<Category>
+		<Id>2</Id>
+		<Name>Personal</Name>
+	</Category>
+	<Category>
+		<Id>3</Id>
+		<Name>Shopping</Name>
+	</Category>
+	<Category>
+		<Id>4</Id>
+		<Name>Fitness</Name>
+	</Category>
+	<Category>
+		<Id>5</Id>
+		<Name>Miscellaneous</Name>
+	</Category>
+</Categories>
