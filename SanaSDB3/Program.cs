@@ -30,7 +30,8 @@ builder.Services.AddSingleton<RepositoryResolver>();
 
 builder.Services.AddScoped<IRepositoryFactory, RepositoryResolver>();
 builder.Services.AddSingleton<RootQuery>();
-
+builder.Services.AddSingleton<RootMutation>();
+builder.Services.AddSingleton<TaskInputType>();
 builder.Services.AddSingleton<TaskType>(); 
 builder.Services.AddSingleton<CategoryType>(); 
 builder.Services.AddSingleton<ISchema, RootSchema>();
