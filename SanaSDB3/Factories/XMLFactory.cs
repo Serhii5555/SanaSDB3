@@ -1,5 +1,4 @@
-﻿using SanaSDB3.Factory;
-using SanaSDB3.Repositories.XMLRepositories;
+﻿using SanaSDB3.Repositories.XMLRepositories;
 using SanaSDB3.Repositories;
 
 namespace SanaSDB3.Factories

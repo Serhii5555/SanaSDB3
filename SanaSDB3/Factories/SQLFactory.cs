@@ -2,7 +2,7 @@
 using SanaSDB3.Repositories;
 using SanaSDB3.Repositories.SQLRepositories;
 
-namespace SanaSDB3.Factory
+namespace SanaSDB3.Factories
 {
     public class SQLFactory(IServiceProvider serviceProvider) : IRepositoryFactory
     {

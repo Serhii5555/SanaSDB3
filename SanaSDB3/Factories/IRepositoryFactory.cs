@@ -1,6 +1,6 @@
 ﻿using SanaSDB3.Repositories;
 
-namespace SanaSDB3.Factory
+namespace SanaSDB3.Factories
 {
     public interface IRepositoryFactory
     {

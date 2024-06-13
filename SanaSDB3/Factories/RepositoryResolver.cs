@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SanaSDB3.Factory;
 using SanaSDB3.Repositories;
 using SanaSDB3.Repositories.SQLRepositories;
 using SanaSDB3.Repositories.XMLRepositories;

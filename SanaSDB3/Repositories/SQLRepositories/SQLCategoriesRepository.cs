@@ -22,7 +22,7 @@ namespace SanaSDB3.Repositories.SQLRepositories
         public async Task Create(Categories category)
         {
             using IDbConnection db = new SqlConnection(_connectionString);
-            string sqlQuery = "INSERT INTO Categories Name VALUES @Name";
+            string sqlQuery = "INSERT INTO Categories (Name) VALUES (@Name)";
             await db.ExecuteAsync(sqlQuery, category);
         }
 
