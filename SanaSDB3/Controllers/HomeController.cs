@@ -42,6 +42,11 @@ namespace SanaSDB3.Controllers
             return View(tasksList);
         }
 
+        public IActionResult Index1()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> TaskCreate([Bind(Prefix = "NewTask")] Tasks model)

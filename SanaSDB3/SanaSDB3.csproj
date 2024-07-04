@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\build\favicon.ico" />
+    <None Include="wwwroot\js\build\index.html" />
+    <None Include="wwwroot\js\build\logo192.png" />
+    <None Include="wwwroot\js\build\logo512.png" />
+    <None Include="wwwroot\js\build\robots.txt" />
+    <None Include="wwwroot\js\build\static\css\main.e6c13ad2.css" />
+    <None Include="wwwroot\js\build\static\css\main.e6c13ad2.css.map" />
+    <None Include="wwwroot\js\build\static\js\453.a53b11f0.chunk.js" />
+    <None Include="wwwroot\js\build\static\js\453.a53b11f0.chunk.js.map" />
+    <None Include="wwwroot\js\build\static\js\main.a817a468.js" />
+    <None Include="wwwroot\js\build\static\js\main.a817a468.js.LICENSE.txt" />
+    <None Include="wwwroot\js\build\static\js\main.a817a468.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="graphiql" Version="2.0.0" />
     <PackageReference Include="GraphQL" Version="7.8.0" />
